@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Stack;
 
+/**
+ * 
+ * @author cwithun
+ *
+ */
 public class JsonObject extends HashMap<String, Object>{
 
 	/**
