@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "module": "general",
+    "version": "0.0.0"
+  },
+  "name": "Help",
+  "description": "You provide assistance to an ally",
+  "area_of_effect": {
+    "shape": "single_target",
+    "normal_range": 5.0
+  },
+  "costs": [
+    {
+      "resource": "action",
+      "count": 1
+    }
+  ],
+  "options": [
+    {
+      "hint": "Distract",
+      "subevents": [
+        {
+          "subevent": "apply_effect",
+          "effect": "general:distracted",
+          "apply_to": "target"
+        }
+      ]
+    },
+    {
+      "hint": "Assist",
+      "subevents": [
+        {
+          "subevent": "apply_effect",
+          "effect": "general:assisted",
+          "apply_to": "target"
+        }
+      ]
+    }
+  ]
+}
