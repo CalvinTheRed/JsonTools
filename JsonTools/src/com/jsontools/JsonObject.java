@@ -5,6 +5,23 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Stack;
 
+/**
+ * 
+ * @author Calvin Withun 09-05-2021
+ * 
+ * <p>
+ * The <code>JsonObject</code> class represents json objects. All virtual
+ * representations of json objects, such as <code>{"key":"value"}</code>,
+ * are implemented as instances of this class. <code>JsonObject</code> is
+ * a class derived from <code>HashMap&ltString,Object&gt</code>.
+ * </p>
+ * <p>
+ * JsonObject objects are mutable; after they are constructed, JsonObject
+ * objects can be given new key-value pairs, they can have keys deleted
+ * from their contents, and they can have their key-value values modified.
+ * </p>
+ *
+ */
 public class JsonObject extends HashMap<String, Object>{
 
 	/**

@@ -6,6 +6,18 @@ import java.util.EmptyStackException;
 import java.util.Scanner;
 import java.util.Stack;
 
+/**
+ * 
+ * @author Calvin Withun 09-05-2021
+ * 
+ * <p>
+ * The <code>JsonParser</code> class is used to load <code>JsonObject
+ * </code> objects from .json files and from Strings containing valid
+ * json data. This process ignores whitespace (spaces, tabs, newlines,
+ * and carriage returns) which is not located within a String value.
+ * </p>
+ *
+ */
 public final class JsonParser {
 	
 	public static JsonObject parseFile(String filepath) throws FileNotFoundException, Exception {

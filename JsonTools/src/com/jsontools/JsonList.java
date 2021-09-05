@@ -2,6 +2,22 @@ package com.jsontools;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Calvin Withun 09-05-2021
+ * 
+ * <p>
+ * The <code>JsonList</code> class represents json lists (arrays). All
+ * virtual representations of json lists, such as <code>[1,2,3]</code>,
+ * are implemented as instances of this class. <code>JsonList</code> is
+ * a class derived from <code>ArrayList&ltObject&gt</code>.
+ * </p>
+ * <p>
+ * JsonList objects are mutable; after they are constructed, JsonList
+ * objects can be given new items and they can have their items removed.
+ * </p>
+ *
+ */
 public class JsonList extends ArrayList<Object> {
 
 	/**
