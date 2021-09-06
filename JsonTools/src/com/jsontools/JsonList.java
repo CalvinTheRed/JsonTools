@@ -1,6 +1,9 @@
 package com.jsontools;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 
@@ -23,8 +26,82 @@ public class JsonList extends ArrayList<Object> {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5861632984184717533L;
+	private static final long serialVersionUID = 4436681852335062648L;
 
+	public JsonList() {
+		super();
+	}
+	
+	public JsonList(Collection<? extends Object> c) {
+		super(c);
+		for (Object obj : c) {
+			if (!(obj instanceof String)
+					&& !(obj instanceof Boolean)
+					&& !(obj instanceof Long)
+					&& !(obj instanceof Double)
+					&& !(obj instanceof JsonObject)
+					&& !(obj instanceof JsonList)) {
+				clear();
+				break;
+			}
+		}
+	}
+
+	@Override
+	public boolean add(Object e) {
+		if (e instanceof String
+				|| e instanceof Boolean
+				|| e instanceof Long
+				|| e instanceof Double
+				|| e instanceof JsonObject
+				|| e instanceof JsonList) {
+			return super.add(e);
+		}
+		return false;
+	}
+	
+	@Override
+	public void add(int index, Object element) {
+		if (element instanceof String
+				|| element instanceof Boolean
+				|| element instanceof Long
+				|| element instanceof Double
+				|| element instanceof JsonObject
+				|| element instanceof JsonList) {
+			super.add(index, element);
+		}
+	}
+	
+	@Override
+	public boolean addAll(Collection<? extends Object> e) {
+		for (Object obj : e) {
+			if (!(obj instanceof String)
+					&& !(obj instanceof Boolean)
+					&& !(obj instanceof Long)
+					&& !(obj instanceof Double)
+					&& !(obj instanceof JsonObject)
+					&& !(obj instanceof JsonList)) {
+				return false;
+			}
+		}
+		return super.addAll(e);
+	}
+	
+	@Override
+	public boolean addAll(int index, Collection<? extends Object> e) {
+		for (Object obj : e) {
+			if (!(obj instanceof String)
+					&& !(obj instanceof Boolean)
+					&& !(obj instanceof Long)
+					&& !(obj instanceof Double)
+					&& !(obj instanceof JsonObject)
+					&& !(obj instanceof JsonList)) {
+				return false;
+			}
+		}
+		return super.addAll(index, e);
+	}
+	
 	@Override
 	public String toString() {
 		String jsonString = "[";

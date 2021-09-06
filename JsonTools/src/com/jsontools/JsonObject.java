@@ -27,8 +27,29 @@ public class JsonObject extends HashMap<String, Object>{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 823989535002995680L;
+	private static final long serialVersionUID = -1586787919457232015L;
 
+	@Override
+	public Object get(Object key) {
+		if (key instanceof String) {
+			return super.get(key);
+		}
+		return null;
+	}
+	
+	@Override
+	public Object put(String key, Object value) {
+		if (value instanceof String
+				|| value instanceof Boolean
+				|| value instanceof Long
+				|| value instanceof Double
+				|| value instanceof JsonObject
+				|| value instanceof JsonList) {
+			return super.put(key, value);
+		}
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		String jsonString = "{";

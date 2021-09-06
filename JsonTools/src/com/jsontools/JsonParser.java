@@ -32,6 +32,7 @@ public final class JsonParser {
 		while (scanner.hasNextLine()) {
 			data += scanner.nextLine();
 		}
+		scanner.close();
 		return parseString(data);
 	}
 	
