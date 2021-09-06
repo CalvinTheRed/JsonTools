@@ -20,24 +20,40 @@ import java.util.Stack;
  */
 public final class JsonParser {
 	
-	public static JsonObject parseFile(String filepath) throws FileNotFoundException, Exception {
-		return parseFile(new File(filepath));
+	public static JsonObject parseObjectFile(String filepath) throws FileNotFoundException, Exception {
+		return parseObjectFile(new File(filepath));
 	}
 	
-	public static JsonObject parseFile(File file) throws FileNotFoundException, Exception {
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(file);
-		
+	public static JsonObject parseObjectFile(File file) throws FileNotFoundException, Exception {
+		Scanner scanner = new Scanner(file);	
 		String data = "";
 		while (scanner.hasNextLine()) {
 			data += scanner.nextLine();
 		}
 		scanner.close();
-		return parseString(data);
+		return parseObjectString(data);
 	}
 	
-	public static JsonObject parseString(String data) throws Exception {
+	public static JsonObject parseObjectString(String data) throws Exception {
 		return constructJsonObject(removeWhitespace(data));
+	}
+	
+	public static JsonList parseListFile(String filepath) throws FileNotFoundException, Exception {
+		return parseListFile(new File(filepath));
+	}
+	
+	public static JsonList parseListFile(File file) throws FileNotFoundException, Exception {
+		Scanner scanner = new Scanner(file);	
+		String data = "";
+		while (scanner.hasNextLine()) {
+			data += scanner.nextLine();
+		}
+		scanner.close();
+		return parseListString(data);
+	}
+	
+	public static JsonList parseListString(String data) throws Exception {
+		return constructJsonList(removeWhitespace(data));
 	}
 	
 	private static String removeWhitespace(String line) throws StringIndexOutOfBoundsException {

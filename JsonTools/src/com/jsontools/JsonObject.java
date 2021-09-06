@@ -154,7 +154,7 @@ public class JsonObject extends HashMap<String, Object>{
 							currentData = currentList.get(index);
 						} catch (NumberFormatException ex){
 							// index specified by contents rather than by number
-							JsonObject subset = JsonParser.parseString(indexData);
+							JsonObject subset = JsonParser.parseObjectString(indexData);
 							for (Object item : currentList) {
 								if (item instanceof JsonObject && subset.subsetOf((JsonObject) item)) {
 									currentData = item;
@@ -188,7 +188,7 @@ public class JsonObject extends HashMap<String, Object>{
 					currentData = currentList.get(index);
 				} catch (NumberFormatException ex){
 					// index specified by contents rather than by number
-					JsonObject subset = JsonParser.parseString(indexData);
+					JsonObject subset = JsonParser.parseObjectString(indexData);
 					for (Object item : currentList) {
 						if (item instanceof JsonObject) {
 							if (subset.subsetOf((JsonObject) item)) {

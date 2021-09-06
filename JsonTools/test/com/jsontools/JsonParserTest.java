@@ -33,7 +33,7 @@ class JsonParserTest {
 	}
 
 	@Test
-	@DisplayName("Parse from file object")
+	@DisplayName("Parse object from file")
 	void test001() {
 		try {
 			// create reference file
@@ -45,7 +45,7 @@ class JsonParserTest {
 			
 			// parse data from file
 			File file = new File(filepath);
-			JsonObject jdata = JsonParser.parseFile(file);
+			JsonObject jdata = JsonParser.parseObjectFile(file);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());
@@ -62,7 +62,7 @@ class JsonParserTest {
 	}
 	
 	@Test
-	@DisplayName("Parse from file path")
+	@DisplayName("Parse object from file path")
 	void test002() {
 		try {
 			// create reference file
@@ -74,7 +74,7 @@ class JsonParserTest {
 			
 			// parse data from file
 			File file = new File(filepath);
-			JsonObject jdata = JsonParser.parseFile(filepath);
+			JsonObject jdata = JsonParser.parseObjectFile(filepath);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());
@@ -90,14 +90,14 @@ class JsonParserTest {
 	}
 	
 	@Test
-	@DisplayName("Parse from json string")
+	@DisplayName("Parse object from json string")
 	void test003() {
 		try {
 			// create reference string
 			String jsonString = "{\"key\":\"value\"}";
 			
 			// parse data from string
-			JsonObject jdata = JsonParser.parseString(jsonString);
+			JsonObject jdata = JsonParser.parseObjectString(jsonString);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());
@@ -110,14 +110,14 @@ class JsonParserTest {
 	}
 	
 	@Test
-	@DisplayName("Parse value (string)")
+	@DisplayName("Parse object value (string)")
 	void test004() {
 		try {
 			// create reference string
 			String jsonString = "{\"key\":\"value\"}";
 			
 			// parse data from string
-			JsonObject jdata = JsonParser.parseString(jsonString);
+			JsonObject jdata = JsonParser.parseObjectString(jsonString);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());
@@ -130,14 +130,14 @@ class JsonParserTest {
 	}
 	
 	@Test
-	@DisplayName("Parse value (bool)")
+	@DisplayName("Parse object value (bool)")
 	void test005() {
 		try {
 			// create reference string
 			String jsonString = "{\"key\":true}";
 			
 			// parse data from string
-			JsonObject jdata = JsonParser.parseString(jsonString);
+			JsonObject jdata = JsonParser.parseObjectString(jsonString);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());
@@ -152,14 +152,14 @@ class JsonParserTest {
 	}
 	
 	@Test
-	@DisplayName("Parse value (long)")
+	@DisplayName("Parse object value (long)")
 	void test006() {
 		try {
 			// create reference string
 			String jsonString = "{\"key\":20}";
 			
 			// parse data from string
-			JsonObject jdata = JsonParser.parseString(jsonString);
+			JsonObject jdata = JsonParser.parseObjectString(jsonString);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());
@@ -174,14 +174,14 @@ class JsonParserTest {
 	}
 	
 	@Test
-	@DisplayName("Parse value (double)")
+	@DisplayName("Parse object value (double)")
 	void test007() {
 		try {
 			// create reference string
 			String jsonString = "{\"key\":2.0}";
 			
 			// parse data from string
-			JsonObject jdata = JsonParser.parseString(jsonString);
+			JsonObject jdata = JsonParser.parseObjectString(jsonString);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());
@@ -196,14 +196,14 @@ class JsonParserTest {
 	}
 	
 	@Test
-	@DisplayName("Parse value (object)")
+	@DisplayName("Parse object value (object)")
 	void test008() {
 		try {
 			// create reference string
 			String jsonString = "{\"key\":{\"key1\":1,\"key2\":2,\"key3\":3}}";
 			
 			// parse data from string
-			JsonObject jdata = JsonParser.parseString(jsonString);
+			JsonObject jdata = JsonParser.parseObjectString(jsonString);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());
@@ -221,14 +221,14 @@ class JsonParserTest {
 	}
 	
 	@Test
-	@DisplayName("Parse value (list)")
+	@DisplayName("Parse object value (list)")
 	void test009() {
 		try {
 			// create reference string
 			String jsonString = "{\"key\":[1,2,3]}";
 			
 			// parse data from string
-			JsonObject jdata = JsonParser.parseString(jsonString);
+			JsonObject jdata = JsonParser.parseObjectString(jsonString);
 			
 			// assertions
 			assertEquals(1, jdata.keySet().size());

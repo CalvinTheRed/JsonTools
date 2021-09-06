@@ -31,8 +31,8 @@ class JsonObjectTest {
 	@DisplayName("subset of primitives")
 	void test001() {
 		try {
-			JsonObject set = JsonParser.parseString("{\"key1\":1,\"key2\":2}");
-			JsonObject subset = JsonParser.parseString("{\"key1\":1}");
+			JsonObject set = JsonParser.parseObjectString("{\"key1\":1,\"key2\":2}");
+			JsonObject subset = JsonParser.parseObjectString("{\"key1\":1}");
 			assertTrue(subset.subsetOf(set));
 			
 			// test fail if values do not match
@@ -53,8 +53,8 @@ class JsonObjectTest {
 	@DisplayName("subset of lists")
 	void test002() {
 		try {
-			JsonObject set = JsonParser.parseString("{\"key1\":[1],\"key2\":[2]}");
-			JsonObject subset = JsonParser.parseString("{\"key1\":[1]}");
+			JsonObject set = JsonParser.parseObjectString("{\"key1\":[1],\"key2\":[2]}");
+			JsonObject subset = JsonParser.parseObjectString("{\"key1\":[1]}");
 			assertTrue(subset.subsetOf(set));
 			
 			JsonList newList;
@@ -81,8 +81,8 @@ class JsonObjectTest {
 	@DisplayName("subset of objects")
 	void test003() {
 		try {
-			JsonObject set = JsonParser.parseString("{\"key1\":{\"sub1\":1,\"sub2\":2},\"key2\":{\"sub3\":3,\"sub4\":4}}");
-			JsonObject subset = JsonParser.parseString("{\"key1\":{\"sub1\":1}}");
+			JsonObject set = JsonParser.parseObjectString("{\"key1\":{\"sub1\":1,\"sub2\":2},\"key2\":{\"sub3\":3,\"sub4\":4}}");
+			JsonObject subset = JsonParser.parseObjectString("{\"key1\":{\"sub1\":1}}");
 			assertTrue(subset.subsetOf(set));
 			
 			// test fail if values do not match
@@ -90,7 +90,7 @@ class JsonObjectTest {
 			assertFalse(subset.subsetOf(set));
 			
 			// test fail if key is not present in set
-			subset.put("key2", JsonParser.parseString("{\"key5\":5}"));
+			subset.put("key2", JsonParser.parseObjectString("{\"key5\":5}"));
 			assertFalse(subset.subsetOf(set));
 			
 		} catch (Exception e) {
@@ -102,7 +102,7 @@ class JsonObjectTest {
 	@DisplayName("Seek test")
 	void test004() {
 		try {
-			JsonObject data = JsonParser.parseFile("resources/json_parser_test.json");
+			JsonObject data = JsonParser.parseObjectFile("resources/json_parser_test.json");
 			assertEquals("general:assisted", data.seek("options[{\"hint\":\"Assist\"}].subevents[0].effect").toString());
 		} catch (Exception ex) {
 			ex.printStackTrace();

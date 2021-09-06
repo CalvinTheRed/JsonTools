@@ -36,7 +36,7 @@ class JsonListTest {
 	void test001() {
 		try {
 			String jsonString = "{\"set\":[1,2,3,4],\"subset\":[1,2,3]}";
-			JsonObject jsonData = JsonParser.parseString(jsonString);
+			JsonObject jsonData = JsonParser.parseObjectString(jsonString);
 			JsonList set = (JsonList) jsonData.get("set");
 			JsonList subset = (JsonList) jsonData.get("subset");
 			assertTrue(subset.subsetOf(set));
@@ -52,7 +52,7 @@ class JsonListTest {
 	void test002() {
 		try {
 			String jsonString = "{\"set\":[[1],[2],[3],[4]],\"subset\":[[1],[2],[3]]}";
-			JsonObject jsonData = JsonParser.parseString(jsonString);
+			JsonObject jsonData = JsonParser.parseObjectString(jsonString);
 			JsonList set = (JsonList) jsonData.get("set");
 			JsonList subset = (JsonList) jsonData.get("subset");
 			assertTrue(subset.subsetOf(set));
@@ -70,7 +70,7 @@ class JsonListTest {
 	void test003() {
 		try {
 			String jsonString = "{\"set\":[{\"key1\":1},{\"key2\":2}],\"subset\":[{\"key2\":2}]}";
-			JsonObject jsonData = JsonParser.parseString(jsonString);
+			JsonObject jsonData = JsonParser.parseObjectString(jsonString);
 			JsonList set = (JsonList) jsonData.get("set");
 			JsonList subset = (JsonList) jsonData.get("subset");
 			assertTrue(subset.subsetOf(set));
