@@ -20,10 +20,59 @@ import java.util.Stack;
  */
 public final class JsonParser {
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>parseObjectFile</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * public static JsonObject parseObjectFile(String fiepath)
+	 * 	throws FileNotFoundException, Exception
+	 * 	</code></pre>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the JSON object represented by the data in the file
+	 * 	located at the given file path. A JSON object may not include
+	 * 	any keys which contain the period ( ' . ' ) character.
+	 * 	</p>
+	 * 
+	 * 	@param filepath - a file path String
+	 * 	@return the JSON object represented by the data in the file
+	 * 	located at the given file path
+	 * 	@throws FileNotFoundException if the file does not exist
+	 * 	@throws Exception if there is a JSON formatting error
+	 */
 	public static JsonObject parseObjectFile(String filepath) throws FileNotFoundException, Exception {
 		return parseObjectFile(new File(filepath));
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>parseObjectFile</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * public static JsonObject parseObjectFile(File file)
+	 * 	throws FileNotFoundException, Exception
+	 * 	</code></pre>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the JSON object represented by the data in the given
+	 * 	file. A JSON object may not include any keys which contain
+	 * 	the period ( ' . ' ) character.
+	 * 	</p>
+	 * 	
+	 * 	@param file - a file containing a JSON object to be parsed
+	 * 	@return the JsonObject represented by the data in the given file
+	 * 	@throws FileNotFoundException if the file does not exist
+	 * 	@throws Exception if there is a JSON formatting error
+	 */
 	public static JsonObject parseObjectFile(File file) throws FileNotFoundException, Exception {
 		Scanner scanner = new Scanner(file);	
 		String data = "";
@@ -34,14 +83,85 @@ public final class JsonParser {
 		return parseObjectString(data);
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>parseObjectString</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * public static JsonObject parseObjectString(String data)
+	 * 	throws Exception
+	 * 	</code></pre>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the JSON object represented in the given String. A
+	 * 	JSON object may not include any keys which contain the period
+	 * 	( ' . ' ) character.
+	 * 	</p>
+	 * 	
+	 * 	@param data - a String representation of a JSON object
+	 * 	@return the JSON object represented in the given String
+	 * 	@throws Exception if there is a JSON formatting error
+	 */
 	public static JsonObject parseObjectString(String data) throws Exception {
 		return constructJsonObject(removeWhitespace(data));
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>parseListFile</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * public static JsonObject parseListFile(File file)
+	 * 	throws FileNotFoundException, Exception
+	 * 	</code></pre>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the JSON list (array) represented by the data in the
+	 * 	file located at the given file path.
+	 * 	</p>
+	 * 	
+	 * 	@param filepath - a file path String
+	 * 	@return the JSON list (array) represented by the data in the
+	 * 	file located at the given file path
+	 * 	@throws FileNotFoundException if the file does not exist
+	 * 	@throws Exception if there is a JSON formatting error
+	 */
 	public static JsonList parseListFile(String filepath) throws FileNotFoundException, Exception {
 		return parseListFile(new File(filepath));
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>parseListFile</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * public static JsonObject parseListFile(File file)
+	 * 	throws FileNotFoundException, Exception
+	 * 	</code></pre>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the JSON list (array) represented by the data in the
+	 * 	given file.
+	 * 	</p>
+	 * 	
+	 * 	@param file - a file containing a JSON list to be parsed
+	 * 	@return the JSON list (array) represented by the data in the
+	 * 	given file
+	 * 	@throws FileNotFoundException if the file does not exist
+	 * 	@throws Exception if there is a JSON formatting error
+	 */
 	public static JsonList parseListFile(File file) throws FileNotFoundException, Exception {
 		Scanner scanner = new Scanner(file);	
 		String data = "";
@@ -52,11 +172,56 @@ public final class JsonParser {
 		return parseListString(data);
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>parseListFile</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * public static JsonObject parseListString(String data)
+	 * 	throws Exception
+	 * 	</code></pre>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the JSON list (array) represented by the given String.
+	 * 	</p>
+	 * 	
+	 * 	@param data - a String representing a JSON list (array)
+	 * 	@return the JSON list (array) represented by the given String
+	 * 	@throws Exception if there is a JSON formatting error
+	 */
 	public static JsonList parseListString(String data) throws Exception {
 		return constructJsonList(removeWhitespace(data));
 	}
 	
-	private static String removeWhitespace(String line) throws StringIndexOutOfBoundsException {
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>removeWhitespace</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * private static String removeWhitespace(String line)
+	 * 	</pre></code>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the String after removing all whitespace characters
+	 * 	(' ', '\t', '\n', '\r') not contained within a nested String
+	 * 	(e.g. "my string is cool" would become "mystringiscool", but
+	 * 	"my string is \"very cool\"" would become "mystringis\"very
+	 * 	 cool\"")
+	 * 	</p>
+	 * 	
+	 * 	@param line - a String to be processed
+	 * 	@return the given String after removing all whitespace
+	 * 	characters not contained within a nested String
+	 */
+	private static String removeWhitespace(String line) {
 		Stack<Character> stack = new Stack<Character>();
 		int currentIndex = 0;
 		while (currentIndex < line.length()) {
@@ -89,6 +254,29 @@ public final class JsonParser {
 		return line;
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>constructJsonObject</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * private static JsonObject constructJsonObject(String data)
+	 * 	throws Exception
+	 * 	</pre></code>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the JSON object represented in a given String. A
+	 * 	JSON object may not include any keys which contain the period
+	 * 	( ' . ' ) character.
+	 * 	</p>
+	 * 	
+	 * 	@param data - a String representing a JSON object
+	 * 	@return the JSON object represented in the given String
+	 * 	@throws Exception if there is a JSON formatting error
+	 */
 	private static JsonObject constructJsonObject(String data) throws Exception {
 		char[] dataArray = data.toCharArray();
 		int length = dataArray.length;
@@ -223,6 +411,27 @@ public final class JsonParser {
 		return jobj;
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>constructJsonList</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * private static JsonList constructJsonList(String data)
+	 * 	throws Exception
+	 * 	</pre></code>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the JSON list (array) represented by the given String.
+	 * 	</p>
+	 * 	
+	 * 	@param data - a String representing a JSON list (array)
+	 * 	@return the JSON list (array) represented by the given String
+	 * 	@throws Exception if there is a JSON formatting error
+	 */
 	private static JsonList constructJsonList(String data) throws Exception {
 		char[] dataArray = data.toCharArray();
 		int length = dataArray.length;
@@ -346,6 +555,27 @@ public final class JsonParser {
 		return jlist;
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>constructJsonPrimitive</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<pre class="tab"><code>
+	 * private static String constructJsonPrimitive(String line)
+	 * 	throws Exception
+	 * 	</pre></code>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the primitive data type (String, boolean, long, or double) represented by the given String.
+	 * 	</p>
+	 * 	
+	 * 	@param data - a String representation of a primitive data value
+	 * 	@return the primitive data value represented by the given String
+	 * 	@throws Exception if the given String does not contain a String representation of a primitive data value
+	 */
 	private static Object constructJsonPrimitive(String data) throws Exception {
 		if (data.charAt(0) == '"' && data.charAt(data.length() - 1) == '"') {
 			// check for string
@@ -371,10 +601,42 @@ public final class JsonParser {
 		}
 	}
 	
+	/**
+	 * 	<style>
+	 * 		.tab{tab-size: 8;}
+	 * 	</style>
+	 * 	<p>
+	 * 	<b><i>removeWhitespace</i></b>
+	 * 	</p>
+	 * 	<p>
+	 * 	<code>
+	 * private static String removeWhitespace(String line)
+	 * 	</code>
+	 * 	</p>
+	 * 	<p>
+	 * 	Returns the key in a JSON key-value pair. All characters
+	 * 	other than the period ( ' . ' ) may be used as a part of a
+	 * 	key. You may pass either an entire key-value pair such as
+	 * 	"\"key\":\"value\"", or just a key such as "\"key\"".
+	 * 	</p>
+	 * 	<p>
+	 * 	Note that if you pass an entire key-value pair, no characters
+	 *  past the first colon ( ' : ' ) character will be considered
+	 *  (in other words, this function will work as intended even if
+	 *  the value of the key-value pair contains a JSON formatting
+	 *  error).
+	 * 	</p>
+	 * 	
+	 * 	@param entry - a String containing a JSON key
+	 * 	@return the key in a JSON key-value pair
+	 * 	@throws Exception if the key is not formatted correctly
+	 */
 	private static String validateKey(String entry) throws Exception {
 		String[] split = entry.split(":");
 		String key = split[0];
-		if (key.charAt(0) == '"' && key.charAt(key.length() - 1) == '"') {
+		// validate that the key starts and ends with double-quotes,
+		// and that it does not contain a period
+		if (key.charAt(0) == '"' && key.charAt(key.length() - 1) == '"' && !key.contains(".")) {
 			key = key.substring(1, key.length() - 1);
 		} else {
 			throw new Exception("Json formatting exception: (" + key + ") is not a valid key");
