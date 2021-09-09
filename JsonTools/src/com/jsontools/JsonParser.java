@@ -115,27 +115,27 @@ public final class JsonParser {
 	 * 		.tab{tab-size: 8;}
 	 * 	</style>
 	 * 	<p>
-	 * 	<b><i>parseListFile</i></b>
+	 * 	<b><i>parseArrayFile</i></b>
 	 * 	</p>
 	 * 	<p>
 	 * 	<pre class="tab"><code>
-	 * public static JsonObject parseListFile(File file)
+	 * public static JsonObject parseArrayFile(File file)
 	 * 	throws FileNotFoundException, Exception
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
-	 * 	Returns the JSON list (array) represented by the data in the
-	 * 	file located at the given file path.
+	 * 	Returns the JSON array represented by the data in the file
+	 * 	located at the given file path.
 	 * 	</p>
 	 * 	
 	 * 	@param filepath - a file path String
-	 * 	@return the JSON list (array) represented by the data in the
-	 * 	file located at the given file path
+	 * 	@return the JSON array represented by the data in the file
+	 * 	located at the given file path
 	 * 	@throws FileNotFoundException if the file does not exist
 	 * 	@throws Exception if there is a JSON formatting error
 	 */
-	public static JsonList parseListFile(String filepath) throws FileNotFoundException, Exception {
-		return parseListFile(new File(filepath));
+	public static JsonArray parseArrayFile(String filepath) throws FileNotFoundException, Exception {
+		return parseArrayFile(new File(filepath));
 	}
 	
 	/**
@@ -143,33 +143,33 @@ public final class JsonParser {
 	 * 		.tab{tab-size: 8;}
 	 * 	</style>
 	 * 	<p>
-	 * 	<b><i>parseListFile</i></b>
+	 * 	<b><i>parseArrayFile</i></b>
 	 * 	</p>
 	 * 	<p>
 	 * 	<pre class="tab"><code>
-	 * public static JsonObject parseListFile(File file)
+	 * public static JsonObject parseArrayFile(File file)
 	 * 	throws FileNotFoundException, Exception
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
-	 * 	Returns the JSON list (array) represented by the data in the
-	 * 	given file.
+	 * 	Returns the JSON array represented by the data in the given
+	 * 	file.
 	 * 	</p>
 	 * 	
-	 * 	@param file - a file containing a JSON list to be parsed
-	 * 	@return the JSON list (array) represented by the data in the
-	 * 	given file
+	 * 	@param file - a file containing a JSON array to be parsed
+	 * 	@return the JSON array represented by the data in the given
+	 * 	file
 	 * 	@throws FileNotFoundException if the file does not exist
 	 * 	@throws Exception if there is a JSON formatting error
 	 */
-	public static JsonList parseListFile(File file) throws FileNotFoundException, Exception {
+	public static JsonArray parseArrayFile(File file) throws FileNotFoundException, Exception {
 		Scanner scanner = new Scanner(file);	
 		String data = "";
 		while (scanner.hasNextLine()) {
 			data += scanner.nextLine();
 		}
 		scanner.close();
-		return parseListString(data);
+		return parseArrayString(data);
 	}
 	
 	/**
@@ -177,24 +177,24 @@ public final class JsonParser {
 	 * 		.tab{tab-size: 8;}
 	 * 	</style>
 	 * 	<p>
-	 * 	<b><i>parseListFile</i></b>
+	 * 	<b><i>parseArrayString</i></b>
 	 * 	</p>
 	 * 	<p>
 	 * 	<pre class="tab"><code>
-	 * public static JsonObject parseListString(String data)
+	 * public static JsonObject parseArrayString(String data)
 	 * 	throws Exception
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
-	 * 	Returns the JSON list (array) represented by the given String.
+	 * 	Returns the JSON array represented by the given String.
 	 * 	</p>
 	 * 	
-	 * 	@param data - a String representing a JSON list (array)
-	 * 	@return the JSON list (array) represented by the given String
+	 * 	@param data - a String representing a JSON array
+	 * 	@return the JSON array represented by the given String
 	 * 	@throws Exception if there is a JSON formatting error
 	 */
-	public static JsonList parseListString(String data) throws Exception {
-		return constructJsonList(removeWhitespace(data));
+	public static JsonArray parseArrayString(String data) throws Exception {
+		return constructJsonArray(removeWhitespace(data));
 	}
 	
 	/**
@@ -381,7 +381,7 @@ public final class JsonParser {
 				if (stack.size() == 0) {
 					String entry = data.substring(beginIndex, currentIndex + 1);
 					String key = validateKey(entry);
-					jobj.put(key, constructJsonList(entry.substring(key.length() + 3, entry.length())));
+					jobj.put(key, constructJsonArray(entry.substring(key.length() + 3, entry.length())));
 					beginIndex = currentIndex + 2;
 					if (dataArray[currentIndex + 1] == ',') {
 						currentIndex++;
@@ -432,7 +432,7 @@ public final class JsonParser {
 	 * 	@return the JSON list (array) represented by the given String
 	 * 	@throws Exception if there is a JSON formatting error
 	 */
-	private static JsonList constructJsonList(String data) throws Exception {
+	private static JsonArray constructJsonArray(String data) throws Exception {
 		char[] dataArray = data.toCharArray();
 		int length = dataArray.length;
 		if (dataArray[0] != '[') {
@@ -443,7 +443,7 @@ public final class JsonParser {
 		}
 		
 		Stack<Character> stack = new Stack<Character>();
-		JsonList jlist = new JsonList();
+		JsonArray jlist = new JsonArray();
 		
 		int beginIndex = 1;
 		int currentIndex = beginIndex;
@@ -529,7 +529,7 @@ public final class JsonParser {
 				}
 				// check if json object is at root level
 				if (stack.size() == 0) {
-					jlist.add(constructJsonList(data.substring(beginIndex, currentIndex + 1)));
+					jlist.add(constructJsonArray(data.substring(beginIndex, currentIndex + 1)));
 					beginIndex = currentIndex + 2;
 					if (dataArray[currentIndex + 1] == ',') {
 						currentIndex++;

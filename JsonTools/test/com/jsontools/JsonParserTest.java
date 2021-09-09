@@ -233,8 +233,8 @@ class JsonParserTest {
 			// assertions
 			assertEquals(1, jdata.keySet().size());
 			Object value = jdata.get("key");
-			assertTrue(value instanceof JsonList);
-			JsonList jlist = (JsonList) value;
+			assertTrue(value instanceof JsonArray);
+			JsonArray jlist = (JsonArray) value;
 			assertEquals(1L, jlist.get(0));
 			assertEquals(2L, jlist.get(1));
 			assertEquals(3L, jlist.get(2));

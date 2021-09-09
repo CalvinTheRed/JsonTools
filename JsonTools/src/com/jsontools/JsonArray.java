@@ -1,38 +1,37 @@
 package com.jsontools;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * 
  * @author Calvin Withun 09-05-2021
  * 
  * <p>
- * The <code>JsonList</code> class represents json lists (arrays). All
- * virtual representations of json lists, such as <code>[1,2,3]</code>,
- * are implemented as instances of this class. <code>JsonList</code> is
- * a class derived from <code>ArrayList&ltObject&gt</code>.
+ * The <code>JsonArray</code> class represents json arrays. All
+ * virtual representations of json arrays, such as <code>[1,2,3]</code>,
+ * are implemented as instances of this class. <code>JsonArray</code>
+ * is a class derived from <code>ArrayList&ltObject&gt</code>.
  * </p>
  * <p>
- * JsonList objects are mutable; after they are constructed, JsonList
- * objects can be given new items and they can have their items removed.
+ * JsonArray objects are mutable; after they are constructed,
+ * JsonArray objects can be given new items and they can have their
+ * items removed.
  * </p>
  *
  */
-public class JsonList extends ArrayList<Object> {
+public class JsonArray extends ArrayList<Object> {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4436681852335062648L;
+	private static final long serialVersionUID = 7051911002593297250L;
 
-	public JsonList() {
+	public JsonArray() {
 		super();
 	}
 	
-	public JsonList(Collection<? extends Object> c) {
+	public JsonArray(Collection<? extends Object> c) {
 		super(c);
 		for (Object obj : c) {
 			if (!(obj instanceof String)
@@ -40,7 +39,7 @@ public class JsonList extends ArrayList<Object> {
 					&& !(obj instanceof Long)
 					&& !(obj instanceof Double)
 					&& !(obj instanceof JsonObject)
-					&& !(obj instanceof JsonList)) {
+					&& !(obj instanceof JsonArray)) {
 				clear();
 				break;
 			}
@@ -54,7 +53,7 @@ public class JsonList extends ArrayList<Object> {
 				|| e instanceof Long
 				|| e instanceof Double
 				|| e instanceof JsonObject
-				|| e instanceof JsonList) {
+				|| e instanceof JsonArray) {
 			return super.add(e);
 		}
 		return false;
@@ -67,7 +66,7 @@ public class JsonList extends ArrayList<Object> {
 				|| element instanceof Long
 				|| element instanceof Double
 				|| element instanceof JsonObject
-				|| element instanceof JsonList) {
+				|| element instanceof JsonArray) {
 			super.add(index, element);
 		}
 	}
@@ -80,7 +79,7 @@ public class JsonList extends ArrayList<Object> {
 					&& !(obj instanceof Long)
 					&& !(obj instanceof Double)
 					&& !(obj instanceof JsonObject)
-					&& !(obj instanceof JsonList)) {
+					&& !(obj instanceof JsonArray)) {
 				return false;
 			}
 		}
@@ -95,7 +94,7 @@ public class JsonList extends ArrayList<Object> {
 					&& !(obj instanceof Long)
 					&& !(obj instanceof Double)
 					&& !(obj instanceof JsonObject)
-					&& !(obj instanceof JsonList)) {
+					&& !(obj instanceof JsonArray)) {
 				return false;
 			}
 		}
@@ -120,7 +119,7 @@ public class JsonList extends ArrayList<Object> {
 		return jsonString + "]";
 	}
 	
-	public boolean subsetOf(JsonList other) {
+	public boolean subsetOf(JsonArray other) {
 		ArrayList<Integer> referencedIndices = new ArrayList<Integer>();
 		boolean subset = true;
 		for (Object thisItem : this) {
@@ -140,12 +139,12 @@ public class JsonList extends ArrayList<Object> {
 					}
 				}
 				subset = foundMatch;
-			} else if (thisItem instanceof JsonList) {
+			} else if (thisItem instanceof JsonArray) {
 				boolean foundMatch = false;
 				for (int i = 0; i < other.size(); i++) {
 					Object otherItem = other.get(i);
 					if (thisItem.getClass() == otherItem.getClass()) {
-						if (((JsonList) thisItem).subsetOf((JsonList) otherItem)) {
+						if (((JsonArray) thisItem).subsetOf((JsonArray) otherItem)) {
 							if (referencedIndices.contains(i)) {
 								continue;
 							}

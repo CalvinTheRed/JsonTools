@@ -57,17 +57,17 @@ class JsonObjectTest {
 			JsonObject subset = JsonParser.parseObjectString("{\"key1\":[1]}");
 			assertTrue(subset.subsetOf(set));
 			
-			JsonList newList;
+			JsonArray newList;
 			
 			// test fail if values do not match
-			newList = new JsonList();
+			newList = new JsonArray();
 			newList.add(3);
 			subset.put("key2", newList);
 			assertFalse(subset.subsetOf(set));
 			subset.remove("key2");
 			
 			// test fail if key is not present in set
-			newList = new JsonList();
+			newList = new JsonArray();
 			newList.add(3);
 			subset.put("key3", newList);
 			assertFalse(subset.subsetOf(set));

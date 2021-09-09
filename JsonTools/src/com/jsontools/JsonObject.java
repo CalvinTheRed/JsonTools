@@ -44,7 +44,7 @@ public class JsonObject extends HashMap<String, Object>{
 				|| value instanceof Long
 				|| value instanceof Double
 				|| value instanceof JsonObject
-				|| value instanceof JsonList) {
+				|| value instanceof JsonArray) {
 			return super.put(key, value);
 		}
 		return null;
@@ -85,10 +85,10 @@ public class JsonObject extends HashMap<String, Object>{
 					// recursively check if the value in "this"
 					// is a subset of the value in "other"
 					subset &= ((JsonObject) thisValue).subsetOf((JsonObject) otherValue);
-				} else if (thisValue instanceof JsonList) {
+				} else if (thisValue instanceof JsonArray) {
 					// return true iff all elements from "this"
 					// are equal to or subsets of items in "other"
-					subset &= ((JsonList) thisValue).subsetOf((JsonList) otherValue);
+					subset &= ((JsonArray) thisValue).subsetOf((JsonArray) otherValue);
 				} else {
 					// key maps to a primitive
 					subset &= thisValue.equals(otherValue);
@@ -148,14 +148,14 @@ public class JsonObject extends HashMap<String, Object>{
 						currentData = ((JsonObject) currentData).get(key);
 						
 						// apply index specification to currentData
-						JsonList currentList = (JsonList) currentData;
+						JsonArray currentArray = (JsonArray) currentData;
 						try {
 							int index = Integer.parseInt(indexData);
-							currentData = currentList.get(index);
+							currentData = currentArray.get(index);
 						} catch (NumberFormatException ex){
 							// index specified by contents rather than by number
 							JsonObject subset = JsonParser.parseObjectString(indexData);
-							for (Object item : currentList) {
+							for (Object item : currentArray) {
 								if (item instanceof JsonObject && subset.subsetOf((JsonObject) item)) {
 									currentData = item;
 									break;
@@ -182,14 +182,14 @@ public class JsonObject extends HashMap<String, Object>{
 				currentData = ((JsonObject) currentData).get(key);
 				
 				// apply index specification to currentData
-				JsonList currentList = (JsonList) currentData;
+				JsonArray currentArray = (JsonArray) currentData;
 				try {
 					int index = Integer.parseInt(indexData);
-					currentData = currentList.get(index);
+					currentData = currentArray.get(index);
 				} catch (NumberFormatException ex){
 					// index specified by contents rather than by number
 					JsonObject subset = JsonParser.parseObjectString(indexData);
-					for (Object item : currentList) {
+					for (Object item : currentArray) {
 						if (item instanceof JsonObject) {
 							if (subset.subsetOf((JsonObject) item)) {
 								currentData = item;

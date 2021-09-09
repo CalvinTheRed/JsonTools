@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class JsonListTest {
+class JsonArrayTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -37,8 +37,8 @@ class JsonListTest {
 		try {
 			String jsonString = "{\"set\":[1,2,3,4],\"subset\":[1,2,3]}";
 			JsonObject jsonData = JsonParser.parseObjectString(jsonString);
-			JsonList set = (JsonList) jsonData.get("set");
-			JsonList subset = (JsonList) jsonData.get("subset");
+			JsonArray set = (JsonArray) jsonData.get("set");
+			JsonArray subset = (JsonArray) jsonData.get("subset");
 			assertTrue(subset.subsetOf(set));
 			subset.add(5);
 			assertFalse(subset.subsetOf(set));
@@ -48,15 +48,15 @@ class JsonListTest {
 	}
 	
 	@Test
-	@DisplayName("subset of lists")
+	@DisplayName("subset of arrays")
 	void test002() {
 		try {
 			String jsonString = "{\"set\":[[1],[2],[3],[4]],\"subset\":[[1],[2],[3]]}";
 			JsonObject jsonData = JsonParser.parseObjectString(jsonString);
-			JsonList set = (JsonList) jsonData.get("set");
-			JsonList subset = (JsonList) jsonData.get("subset");
+			JsonArray set = (JsonArray) jsonData.get("set");
+			JsonArray subset = (JsonArray) jsonData.get("subset");
 			assertTrue(subset.subsetOf(set));
-			JsonList newMember = new JsonList();
+			JsonArray newMember = new JsonArray();
 			newMember.add(5);
 			subset.add(newMember);
 			assertFalse(subset.subsetOf(set));
@@ -71,8 +71,8 @@ class JsonListTest {
 		try {
 			String jsonString = "{\"set\":[{\"key1\":1},{\"key2\":2}],\"subset\":[{\"key2\":2}]}";
 			JsonObject jsonData = JsonParser.parseObjectString(jsonString);
-			JsonList set = (JsonList) jsonData.get("set");
-			JsonList subset = (JsonList) jsonData.get("subset");
+			JsonArray set = (JsonArray) jsonData.get("set");
+			JsonArray subset = (JsonArray) jsonData.get("subset");
 			assertTrue(subset.subsetOf(set));
 			
 			JsonObject newMember = new JsonObject();
