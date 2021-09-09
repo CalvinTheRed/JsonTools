@@ -16,7 +16,7 @@ import java.util.Collection;
  * <p>
  * JsonArray objects are mutable; after they are constructed,
  * JsonArray objects can be given new items and they can have their
- * items removed.
+ * items removed. 
  * </p>
  *
  */
