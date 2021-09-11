@@ -116,36 +116,28 @@ public class JsonObject extends HashMap<String, Object>{
 			char currentChar = keypathArray[currentIndex];
 			if (currentIndex == length - 1) {
 				String fragment = keypath.substring(beginIndex, currentIndex + 1);
-				System.out.println(fragment);
 				// ending a key or an index specification
 				if (keypathArray[currentIndex] == ']') {
-					System.out.println("Ending an index spec");
 					// ending an index specification
 					JsonArray currentArray = (JsonArray) currentData;
 					String specification = fragment.substring(1, fragment.length() - 1);
 					// is index specified by content or by number?
 					if (keypathArray[currentIndex - 1] == '}') {
 						// index specified by content
-						System.out.println("Index spec by content");
 						JsonObject specificationObject = JsonParser.parseObjectString(specification);
 						for (Object item : currentArray) {
 							if (item instanceof JsonObject && specificationObject.subsetOf((JsonObject) item)) {
 								currentData = item;
-								System.out.println(keypath.substring(0, currentIndex + 1) + " : " + currentData);
 								break;
 							}
 						}
 					} else {
 						// index specified by index
-						System.out.println("Index spec by index");
 						currentData = currentArray.get(Integer.parseInt(specification));
-						System.out.println(keypath.substring(0, currentIndex + 1) + " : " + currentData);
 					}
 				} else {
 					// ending a key
-					System.out.println("Ending a key");
 					currentData = ((JsonObject) currentData).get(fragment);
-					System.out.println(keypath.substring(0, currentIndex + 1) + " : " + currentData);
 				}
 			} else if (currentChar == '[' || currentChar == '.') {
 				try {
@@ -169,7 +161,6 @@ public class JsonObject extends HashMap<String, Object>{
 					continue;
 				}
 				String fragment = keypath.substring(beginIndex, currentIndex);
-				System.out.println(fragment);
 				// ending a key or an index specification
 				if (keypathArray[currentIndex - 1] == ']') {
 					// ending an index specification
@@ -183,19 +174,16 @@ public class JsonObject extends HashMap<String, Object>{
 							if (item instanceof JsonObject && specificationObject.subsetOf((JsonObject) item)) {
 								// first match will be used in the case where there are multiple matches
 								currentData = item;
-								System.out.println(keypath.substring(0, currentIndex) + " : " + currentData);
 								break;
 							}
 						}
 					} else {
 						// index specified by index
 						currentData = currentArray.get(Integer.parseInt(specification));
-						System.out.println(keypath.substring(0, currentIndex) + " : " + currentData);
 					}
 				} else {
 					// ending a key
 					currentData = ((JsonObject) currentData).get(fragment);
-					System.out.println(keypath.substring(0, currentIndex) + " : " + currentData);
 				}
 				// increment beginIndex according to [ or .
 				if (currentChar == '[') {
