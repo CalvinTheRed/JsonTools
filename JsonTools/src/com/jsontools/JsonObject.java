@@ -104,7 +104,6 @@ public class JsonObject extends HashMap<String, Object>{
 		return subset;
 	}
 	
-	// TODO: does not work if special characters are found in strings
 	public Object seek(String keypath) throws JSONFormatException {
 		Object currentData = this;
 		Stack<Character> stack = new Stack<Character>();
