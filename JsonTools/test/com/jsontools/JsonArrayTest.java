@@ -40,9 +40,10 @@ class JsonArrayTest {
 			JsonArray set = (JsonArray) jsonData.get("set");
 			JsonArray subset = (JsonArray) jsonData.get("subset");
 			assertTrue(subset.subsetOf(set));
-			subset.add(5);
+			subset.add(5L);
 			assertFalse(subset.subsetOf(set));
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			fail("Unexpected exception");
 		}
 	}
@@ -57,10 +58,11 @@ class JsonArrayTest {
 			JsonArray subset = (JsonArray) jsonData.get("subset");
 			assertTrue(subset.subsetOf(set));
 			JsonArray newMember = new JsonArray();
-			newMember.add(5);
+			newMember.add(5L);
 			subset.add(newMember);
 			assertFalse(subset.subsetOf(set));
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			fail("Unexpected exception");
 		}
 	}
@@ -78,15 +80,16 @@ class JsonArrayTest {
 			JsonObject newMember = new JsonObject();
 			
 			// check for fail with differing values
-			newMember.put("key1", 3);
+			newMember.put("key1", 3L);
 			subset.add(newMember);
 			assertFalse(subset.subsetOf(set));
 			
 			// check for fail with absent keys
 			newMember.remove("key1");
-			newMember.put("key3", 3);
+			newMember.put("key3", 3L);
 			assertFalse(subset.subsetOf(set));
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			fail("Unexpected exception");
 		}
 	}

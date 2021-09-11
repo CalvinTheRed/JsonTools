@@ -30,7 +30,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * public static JsonObject parseObjectFile(String fiepath)
-	 * 	throws FileNotFoundException, Exception
+	 * 	throws FileNotFoundException, JSONFormatException
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
@@ -43,9 +43,9 @@ public final class JsonParser {
 	 * 	@return the JSON object represented by the data in the file
 	 * 	located at the given file path
 	 * 	@throws FileNotFoundException if the file does not exist
-	 * 	@throws Exception if there is a JSON formatting error
+	 * 	@throws JSONFormatException if there is a JSON formatting error
 	 */
-	public static JsonObject parseObjectFile(String filepath) throws FileNotFoundException, Exception {
+	public static JsonObject parseObjectFile(String filepath) throws FileNotFoundException, JSONFormatException {
 		return parseObjectFile(new File(filepath));
 	}
 	
@@ -59,7 +59,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * public static JsonObject parseObjectFile(File file)
-	 * 	throws FileNotFoundException, Exception
+	 * 	throws FileNotFoundException, JSONFormatException
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
@@ -71,9 +71,9 @@ public final class JsonParser {
 	 * 	@param file - a file containing a JSON object to be parsed
 	 * 	@return the JsonObject represented by the data in the given file
 	 * 	@throws FileNotFoundException if the file does not exist
-	 * 	@throws Exception if there is a JSON formatting error
+	 * 	@throws JSONFormatException if there is a JSON formatting error
 	 */
-	public static JsonObject parseObjectFile(File file) throws FileNotFoundException, Exception {
+	public static JsonObject parseObjectFile(File file) throws FileNotFoundException, JSONFormatException {
 		Scanner scanner = new Scanner(file);	
 		String data = "";
 		while (scanner.hasNextLine()) {
@@ -93,7 +93,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * public static JsonObject parseObjectString(String data)
-	 * 	throws Exception
+	 * 	throws JSONFormatException
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
@@ -104,9 +104,9 @@ public final class JsonParser {
 	 * 	
 	 * 	@param data - a String representation of a JSON object
 	 * 	@return the JSON object represented in the given String
-	 * 	@throws Exception if there is a JSON formatting error
+	 * 	@throws JSONFormatException if there is a JSON formatting error
 	 */
-	public static JsonObject parseObjectString(String data) throws Exception {
+	public static JsonObject parseObjectString(String data) throws JSONFormatException {
 		return constructJsonObject(removeWhitespace(data));
 	}
 	
@@ -120,7 +120,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * public static JsonObject parseArrayFile(File file)
-	 * 	throws FileNotFoundException, Exception
+	 * 	throws FileNotFoundException, JSONFormatException
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
@@ -132,9 +132,9 @@ public final class JsonParser {
 	 * 	@return the JSON array represented by the data in the file
 	 * 	located at the given file path
 	 * 	@throws FileNotFoundException if the file does not exist
-	 * 	@throws Exception if there is a JSON formatting error
+	 * 	@throws JSONFormatException if there is a JSON formatting error
 	 */
-	public static JsonArray parseArrayFile(String filepath) throws FileNotFoundException, Exception {
+	public static JsonArray parseArrayFile(String filepath) throws FileNotFoundException, JSONFormatException {
 		return parseArrayFile(new File(filepath));
 	}
 	
@@ -148,7 +148,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * public static JsonObject parseArrayFile(File file)
-	 * 	throws FileNotFoundException, Exception
+	 * 	throws FileNotFoundException, JSONFormatException
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
@@ -160,9 +160,9 @@ public final class JsonParser {
 	 * 	@return the JSON array represented by the data in the given
 	 * 	file
 	 * 	@throws FileNotFoundException if the file does not exist
-	 * 	@throws Exception if there is a JSON formatting error
+	 * 	@throws JSONFormatException if there is a JSON formatting error
 	 */
-	public static JsonArray parseArrayFile(File file) throws FileNotFoundException, Exception {
+	public static JsonArray parseArrayFile(File file) throws FileNotFoundException, JSONFormatException {
 		Scanner scanner = new Scanner(file);	
 		String data = "";
 		while (scanner.hasNextLine()) {
@@ -182,7 +182,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * public static JsonObject parseArrayString(String data)
-	 * 	throws Exception
+	 * 	throws JSONFormatException
 	 * 	</code></pre>
 	 * 	</p>
 	 * 	<p>
@@ -191,9 +191,9 @@ public final class JsonParser {
 	 * 	
 	 * 	@param data - a String representing a JSON array
 	 * 	@return the JSON array represented by the given String
-	 * 	@throws Exception if there is a JSON formatting error
+	 * 	@throws JSONFOrmatException if there is a JSON formatting error
 	 */
-	public static JsonArray parseArrayString(String data) throws Exception {
+	public static JsonArray parseArrayString(String data) throws JSONFormatException {
 		return constructJsonArray(removeWhitespace(data));
 	}
 	
@@ -264,7 +264,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * private static JsonObject constructJsonObject(String data)
-	 * 	throws Exception
+	 * 	throws JSONFormatException
 	 * 	</pre></code>
 	 * 	</p>
 	 * 	<p>
@@ -275,16 +275,16 @@ public final class JsonParser {
 	 * 	
 	 * 	@param data - a String representing a JSON object
 	 * 	@return the JSON object represented in the given String
-	 * 	@throws Exception if there is a JSON formatting error
+	 * 	@throws JSONFormatException if there is a JSON formatting error
 	 */
-	private static JsonObject constructJsonObject(String data) throws Exception {
+	private static JsonObject constructJsonObject(String data) throws JSONFormatException {
 		char[] dataArray = data.toCharArray();
 		int length = dataArray.length;
 		if (dataArray[0] != '{') {
-			throw new Exception("JSON formatting error: json object does not begin with '{'");
+			throw new JSONFormatException("json object does not begin with '{'");
 		}
 		if (dataArray[length - 1] != '}') {
-			throw new Exception("JSON formatting error: json object does not end with '}'");
+			throw new JSONFormatException("json object does not end with '}'");
 		}
 			
 		Stack<Character> stack = new Stack<Character>();
@@ -340,14 +340,14 @@ public final class JsonParser {
 						continue;
 					}
 				} catch (EmptyStackException ex) {
-					throw new Exception("JSON formatting error: unexpected token '}'");
+					throw new JSONFormatException("unexpected token '}'");
 				}
 				// check for valid nesting
 				if (stack.peek() == '{') {
 					// exiting a json object
 					stack.pop();
 				} else {
-					throw new Exception("JSON formatting error: unexpected token '}'");
+					throw new JSONFormatException("unexpected token '}'");
 				}
 				// check if json object is at root level
 				if (stack.size() == 0) {
@@ -368,14 +368,14 @@ public final class JsonParser {
 						continue;
 					}
 				} catch (EmptyStackException ex) {
-					throw new Exception("JSON formatting error: unexpected token ']'");
+					throw new JSONFormatException("unexpected token ']'");
 				}
 				// check for valid nesting
 				if (stack.peek() == '[') {
 					// exiting a json object
 					stack.pop();
 				} else {
-					throw new Exception("JSON formatting error: unexpected token ']'");
+					throw new JSONFormatException("unexpected token ']'");
 				}
 				// check if json object is at root level
 				if (stack.size() == 0) {
@@ -421,7 +421,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * private static JsonList constructJsonList(String data)
-	 * 	throws Exception
+	 * 	throws JSONFormatException
 	 * 	</pre></code>
 	 * 	</p>
 	 * 	<p>
@@ -430,16 +430,16 @@ public final class JsonParser {
 	 * 	
 	 * 	@param data - a String representing a JSON list (array)
 	 * 	@return the JSON list (array) represented by the given String
-	 * 	@throws Exception if there is a JSON formatting error
+	 * 	@throws JSONFormatException if there is a JSON formatting error
 	 */
-	private static JsonArray constructJsonArray(String data) throws Exception {
+	private static JsonArray constructJsonArray(String data) throws JSONFormatException {
 		char[] dataArray = data.toCharArray();
 		int length = dataArray.length;
 		if (dataArray[0] != '[') {
-			throw new Exception("JSON formatting error: json list does not begin with '['");
+			throw new JSONFormatException("json list does not begin with '['");
 		}
 		if (dataArray[length - 1] != ']') {
-			throw new Exception("JSON formatting error: json list does not end with ']'");
+			throw new JSONFormatException("json list does not end with ']'");
 		}
 		
 		Stack<Character> stack = new Stack<Character>();
@@ -495,14 +495,14 @@ public final class JsonParser {
 						continue;
 					}
 				} catch (EmptyStackException ex) {
-					throw new Exception("JSON formatting error: unexpected token '}'");
+					throw new JSONFormatException("unexpected token '}'");
 				}
 				// check for valid nesting
 				if (stack.peek() == '{') {
 					// exiting a json object
 					stack.pop();
 				} else {
-					throw new Exception("JSON formatting error: unexpected token '}'");
+					throw new JSONFormatException("unexpected token '}'");
 				}
 				// check if json object is at root level
 				if (stack.size() == 0) {
@@ -518,14 +518,14 @@ public final class JsonParser {
 						continue;
 					}
 				} catch (EmptyStackException ex) {
-					throw new Exception("JSON formatting error: unexpected token ']'");
+					throw new JSONFormatException("unexpected token ']'");
 				}
 				// check for valid nesting
 				if (stack.peek() == '[') {
 					// exiting a json object
 					stack.pop();
 				} else {
-					throw new Exception("JSON formatting error: unexpected token ']'");
+					throw new JSONFormatException("unexpected token ']'");
 				}
 				// check if json object is at root level
 				if (stack.size() == 0) {
@@ -565,7 +565,7 @@ public final class JsonParser {
 	 * 	<p>
 	 * 	<pre class="tab"><code>
 	 * private static String constructJsonPrimitive(String line)
-	 * 	throws Exception
+	 * 	throws JSONFormatException
 	 * 	</pre></code>
 	 * 	</p>
 	 * 	<p>
@@ -574,9 +574,9 @@ public final class JsonParser {
 	 * 	
 	 * 	@param data - a String representation of a primitive data value
 	 * 	@return the primitive data value represented by the given String
-	 * 	@throws Exception if the given String does not contain a String representation of a primitive data value
+	 * 	@throws JSONFormatException if the given String does not contain a String representation of a primitive data value
 	 */
-	private static Object constructJsonPrimitive(String data) throws Exception {
+	private static Object constructJsonPrimitive(String data) throws JSONFormatException {
 		if (data.charAt(0) == '"' && data.charAt(data.length() - 1) == '"') {
 			// check for string
 			return data.substring(1, data.length() - 1);
@@ -595,7 +595,7 @@ public final class JsonParser {
 					return Double.parseDouble(data);
 				} catch (NumberFormatException ex2) {
 					// not a Double
-					throw new Exception("JSON formatting error: (" + data + ") is not a valid value");
+					throw new JSONFormatException("(" + data + ") is not a valid value");
 				}
 			}
 		}
@@ -606,11 +606,12 @@ public final class JsonParser {
 	 * 		.tab{tab-size: 8;}
 	 * 	</style>
 	 * 	<p>
-	 * 	<b><i>removeWhitespace</i></b>
+	 * 	<b><i>validateKey</i></b>
 	 * 	</p>
 	 * 	<p>
 	 * 	<code>
-	 * private static String removeWhitespace(String line)
+	 * private static String validateKey(String entry)
+	 * 	throws JSONFormatException
 	 * 	</code>
 	 * 	</p>
 	 * 	<p>
@@ -629,9 +630,9 @@ public final class JsonParser {
 	 * 	
 	 * 	@param entry - a String containing a JSON key
 	 * 	@return the key in a JSON key-value pair
-	 * 	@throws Exception if the key is not formatted correctly
+	 * 	@throws JSONFormatException if the key is not formatted correctly
 	 */
-	private static String validateKey(String entry) throws Exception {
+	private static String validateKey(String entry) throws JSONFormatException {
 		String[] split = entry.split(":");
 		String key = split[0];
 		// validate that the key starts and ends with double-quotes,
@@ -639,7 +640,7 @@ public final class JsonParser {
 		if (key.charAt(0) == '"' && key.charAt(key.length() - 1) == '"' && !key.contains(".")) {
 			key = key.substring(1, key.length() - 1);
 		} else {
-			throw new Exception("Json formatting exception: (" + key + ") is not a valid key");
+			throw new JSONFormatException("(" + key + ") is not a valid key");
 		}
 		return key;
 	}

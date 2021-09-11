@@ -55,8 +55,8 @@ class JsonParserTest {
 			file.delete();
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 		
 	}
@@ -84,8 +84,8 @@ class JsonParserTest {
 			file.delete();
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 	}
 	
@@ -104,8 +104,8 @@ class JsonParserTest {
 			assertEquals("value", jdata.get("key"));
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 	}
 	
@@ -124,8 +124,8 @@ class JsonParserTest {
 			assertEquals("value", jdata.get("key"));
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 	}
 	
@@ -146,8 +146,8 @@ class JsonParserTest {
 			assertEquals(true, jdata.get("key"));
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 	}
 	
@@ -168,8 +168,8 @@ class JsonParserTest {
 			assertEquals(20L, jdata.get("key"));
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 	}
 	
@@ -190,8 +190,8 @@ class JsonParserTest {
 			assertEquals(2.0, jdata.get("key"));
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 	}
 	
@@ -215,8 +215,8 @@ class JsonParserTest {
 			assertEquals(3L, jobj.get("key3"));
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 	}
 	
@@ -240,8 +240,8 @@ class JsonParserTest {
 			assertEquals(3L, jlist.get(2));
 			
 		} catch (Exception ex) {
-			fail("Unexpected exception");
 			ex.printStackTrace();
+			fail("Unexpected exception");
 		}
 	}
 

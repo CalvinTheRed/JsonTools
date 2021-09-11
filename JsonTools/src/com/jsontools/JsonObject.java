@@ -104,7 +104,8 @@ public class JsonObject extends HashMap<String, Object>{
 		return subset;
 	}
 	
-	public Object seek(String keypath) throws Exception {
+	// TODO: does not work if special characters are found in strings
+	public Object seek(String keypath) throws JSONFormatException {
 		Object currentData = this;
 		Stack<Character> stack = new Stack<Character>();
 		char[] keypathArray = keypath.toCharArray();
@@ -112,95 +113,155 @@ public class JsonObject extends HashMap<String, Object>{
 		int beginIndex = 0;
 		int currentIndex = beginIndex;
 		
-		while (currentIndex < length){
+		while (currentIndex < length) {
 			char currentChar = keypathArray[currentIndex];
-			if (currentChar == '[') {
+			if (currentIndex == length - 1) {
+				String fragment = keypath.substring(beginIndex, currentIndex + 1);
+				System.out.println(fragment);
+				// ending a key or an index specification
+				if (keypathArray[currentIndex] == ']') {
+					System.out.println("Ending an index spec");
+					// ending an index specification
+					JsonArray currentArray = (JsonArray) currentData;
+					String specification = fragment.substring(1, fragment.length() - 1);
+					// is index specified by content or by number?
+					if (keypathArray[currentIndex - 1] == '}') {
+						// index specified by content
+						System.out.println("Index spec by content");
+						JsonObject specificationObject = JsonParser.parseObjectString(specification);
+						for (Object item : currentArray) {
+							if (item instanceof JsonObject && specificationObject.subsetOf((JsonObject) item)) {
+								currentData = item;
+								System.out.println(keypath.substring(0, currentIndex + 1) + " : " + currentData);
+								break;
+							}
+						}
+					} else {
+						// index specified by index
+						System.out.println("Index spec by index");
+						currentData = currentArray.get(Integer.parseInt(specification));
+						System.out.println(keypath.substring(0, currentIndex + 1) + " : " + currentData);
+					}
+				} else {
+					// ending a key
+					System.out.println("Ending a key");
+					currentData = ((JsonObject) currentData).get(fragment);
+					System.out.println(keypath.substring(0, currentIndex + 1) + " : " + currentData);
+				}
+			} else if (currentChar == '[' || currentChar == '.') {
 				try {
-					if (stack.peek() != '"') {
+					if (stack.peek() == '"') {
+						// character is inside a string
+						currentIndex++;
+						continue;
+					} else {
+						if (currentChar == '[') {
+							stack.push(currentChar);
+						}
+					}
+				} catch (EmptyStackException ex) {
+					if (currentChar == '[') {
+						stack.push(currentChar);
+					}
+				}
+				// if stack has previous content then continue
+				if (stack.size() > 1) {
+					currentIndex++;
+					continue;
+				}
+				String fragment = keypath.substring(beginIndex, currentIndex);
+				System.out.println(fragment);
+				// ending a key or an index specification
+				if (keypathArray[currentIndex - 1] == ']') {
+					// ending an index specification
+					JsonArray currentArray = (JsonArray) currentData;
+					String specification = fragment.substring(1, fragment.length() - 1);
+					// is index specified by content or by number?
+					if (keypathArray[currentIndex - 2] == '}') {
+						// index specified by content
+						JsonObject specificationObject = JsonParser.parseObjectString(specification);
+						for (Object item : currentArray) {
+							if (item instanceof JsonObject && specificationObject.subsetOf((JsonObject) item)) {
+								// first match will be used in the case where there are multiple matches
+								currentData = item;
+								System.out.println(keypath.substring(0, currentIndex) + " : " + currentData);
+								break;
+							}
+						}
+					} else {
+						// index specified by index
+						currentData = currentArray.get(Integer.parseInt(specification));
+						System.out.println(keypath.substring(0, currentIndex) + " : " + currentData);
+					}
+				} else {
+					// ending a key
+					currentData = ((JsonObject) currentData).get(fragment);
+					System.out.println(keypath.substring(0, currentIndex) + " : " + currentData);
+				}
+				// increment beginIndex according to [ or .
+				if (currentChar == '[') {
+					beginIndex = currentIndex;
+				} else {
+					beginIndex = currentIndex + 1;
+				}
+			} else if (currentChar == '{') {
+				try {
+					if (stack.peek() == '"') {
+						// character is inside a string
+						currentIndex++;
+						continue;
+					} else {
 						stack.push(currentChar);
 					}
 				} catch (EmptyStackException ex) {
 					stack.push(currentChar);
 				}
-			} else if (currentChar == ']') {
+			} else if (currentChar == '}') {
 				try {
-					char top = stack.peek();
-					if (top == '"') {
+					if (stack.peek() == '"') {
+						// character is inside a string
 						currentIndex++;
 						continue;
-					} else if (top == '[') {
+					} else if (stack.peek() == '{') {
 						stack.pop();
 					} else {
-						throw new Exception("JSON keypath formatting error: unexpected token ']'");
-					}	
+						throw new JSONFormatException("unexpected token '}'");
+					}
 				} catch (EmptyStackException ex) {
-					throw new Exception("JSON keypath formatting error: unexpected token ']'");
+					throw new JSONFormatException("unexpected token '}'");
 				}
-			} else if (currentChar == '.') {
-				if (stack.size() == 0) {
-					// identify key
-					String key = keypath.substring(beginIndex, currentIndex);
-					// determine if key includes index data
-					if (key.charAt(key.length() - 1) == ']') {
-						int indexDataStart = key.indexOf('[');
-						String indexData = key.substring(indexDataStart + 1, key.length() - 1);
-						key = key.substring(0, indexDataStart);
-						currentData = ((JsonObject) currentData).get(key);
-						
-						// apply index specification to currentData
-						JsonArray currentArray = (JsonArray) currentData;
-						try {
-							int index = Integer.parseInt(indexData);
-							currentData = currentArray.get(index);
-						} catch (NumberFormatException ex){
-							// index specified by contents rather than by number
-							JsonObject subset = JsonParser.parseObjectString(indexData);
-							for (Object item : currentArray) {
-								if (item instanceof JsonObject && subset.subsetOf((JsonObject) item)) {
-									currentData = item;
-									break;
-								}
-							}
+			} else if (currentChar == ']') {
+				try {
+					if (stack.peek() == '"') {
+						// character is inside a string
+						currentIndex++;
+						continue;
+					} else if (stack.peek() == '[') {
+						stack.pop();
+					} else {
+						throw new JSONFormatException("unexpected token ']'");
+					}
+				} catch (EmptyStackException ex) {
+					throw new JSONFormatException("unexpected token ']'");
+				}
+			} else if (currentChar == '"') {
+				try {
+					if (stack.peek() == '"') {
+						if (keypathArray[currentIndex - 1] == '\\') {
+							// character is inside a string
+							currentIndex++;
+							continue;
+						} else {
+							stack.pop();
 						}
 					} else {
-						currentData = ((JsonObject) currentData).get(key);
+						stack.push(currentChar);
 					}
-					beginIndex = currentIndex + 1;
+				} catch (EmptyStackException ex) {
+					stack.push(currentChar);
 				}
 			}
 			currentIndex++;
-		}
-		// catch final segment of keypath
-		if (beginIndex < length) {
-			// identify key
-			String key = keypath.substring(beginIndex, currentIndex);
-			// determine if key includes index data
-			if (key.charAt(key.length() - 1) == ']') {
-				int indexDataStart = key.indexOf('[');
-				String indexData = key.substring(indexDataStart + 1, key.length() - 1);
-				key = key.substring(0, indexDataStart);
-				currentData = ((JsonObject) currentData).get(key);
-				
-				// apply index specification to currentData
-				JsonArray currentArray = (JsonArray) currentData;
-				try {
-					int index = Integer.parseInt(indexData);
-					currentData = currentArray.get(index);
-				} catch (NumberFormatException ex){
-					// index specified by contents rather than by number
-					JsonObject subset = JsonParser.parseObjectString(indexData);
-					for (Object item : currentArray) {
-						if (item instanceof JsonObject) {
-							if (subset.subsetOf((JsonObject) item)) {
-								currentData = item;
-								break;
-							}
-						}
-					}
-				}
-			} else {
-				currentData = ((JsonObject) currentData).get(key);
-			}
 		}
 		return currentData;
 	}
