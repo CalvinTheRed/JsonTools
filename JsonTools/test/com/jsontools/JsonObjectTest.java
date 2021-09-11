@@ -279,5 +279,63 @@ class JsonObjectTest {
 			fail("Unexpected exception");
 		}
 	}
+	
+	@Test
+	@DisplayName("join (novel key)")
+	void test018() {
+		try {
+			JsonObject data = JsonParser.parseObjectString("{}");
+			JsonObject toJoin = JsonParser.parseObjectString("{\"key\":1}");
+			data.join(toJoin);
+			assertEquals(1L, data.seek("key"));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("Unexpected exception");
+		}
+	}
+	
+	@Test
+	@DisplayName("join (primitive key collision)")
+	void test019() {
+		try {
+			JsonObject data = JsonParser.parseObjectString("{\"key\":1}");
+			JsonObject toJoin = JsonParser.parseObjectString("{\"key\":2}");
+			data.join(toJoin);
+			assertEquals(2L, data.seek("key"));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("Unexpected exception");
+		}
+	}
+	
+	@Test
+	@DisplayName("join (object-primitive collision)")
+	void test020() {
+		try {
+			JsonObject data = JsonParser.parseObjectString("{\"key\":1}");
+			JsonObject toJoin = JsonParser.parseObjectString("{\"key\":{\"subkey\":1}}");
+			data.join(toJoin);
+			assertEquals("{\"subkey\":1}", data.seek("key").toString());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("Unexpected exception");
+		}
+	}
+	
+	@Test
+	@DisplayName("join (object-object collision)")
+	void test021() {
+		try {
+			JsonObject data = JsonParser.parseObjectString("{\"key\":{\"subkey1\":1,\"subkey2\":2}}");
+			JsonObject toJoin = JsonParser.parseObjectString("{\"key\":{\"subkey2\":3,\"subkey3\":4}}");
+			data.join(toJoin);
+			assertEquals(1L, data.seek("key.subkey1"));
+			assertEquals(3L, data.seek("key.subkey2"));
+			assertEquals(4L, data.seek("key.subkey3"));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("Unexpected exception");
+		}
+	}
 
 }

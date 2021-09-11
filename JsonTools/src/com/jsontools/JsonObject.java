@@ -265,4 +265,20 @@ public class JsonObject extends HashMap<String, Object>{
 		return currentData;
 	}
 	
+	public void join(JsonObject other) {
+		for (String key : other.keySet()) {
+			Object value = other.get(key);
+			if (value instanceof JsonObject) {
+				Object thisValue = get(key);
+				if (thisValue instanceof JsonObject) {
+					((JsonObject) thisValue).join((JsonObject) value);
+				} else {
+					put(key, value);
+				}
+			} else {
+				put(key, value);
+			}
+		}
+	}
+	
 }
