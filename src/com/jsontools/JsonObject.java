@@ -1,9 +1,9 @@
 package com.jsontools;
 
 import java.util.EmptyStackException;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 
@@ -13,7 +13,7 @@ import java.util.Stack;
  * The <code>JsonObject</code> class represents json objects. All virtual
  * representations of json objects, such as <code>{"key":"value"}</code>,
  * are implemented as instances of this class. <code>JsonObject</code> is
- * a class derived from <code>HashMap&ltString,Object&gt</code>.
+ * a class derived from <code>ConcurrentHashMap&ltString,Object&gt</code>.
  * </p>
  * <p>
  * JsonObject objects are mutable; after they are constructed, JsonObject
@@ -22,7 +22,7 @@ import java.util.Stack;
  * </p>
  *
  */
-public class JsonObject extends HashMap<String, Object>{
+public class JsonObject extends ConcurrentHashMap<String, Object>{
 
 	/**
 	 * 
