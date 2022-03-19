@@ -75,12 +75,13 @@ public final class JsonParser {
 	 */
 	public static JsonObject parseObjectFile(File file) throws FileNotFoundException, JSONFormatException {
 		Scanner scanner = new Scanner(file);	
-		String data = "";
+		StringBuilder stringBuilder = new StringBuilder();
+		
 		while (scanner.hasNextLine()) {
-			data += scanner.nextLine();
+			stringBuilder.append(scanner.nextLine());
 		}
 		scanner.close();
-		return parseObjectString(data);
+		return parseObjectString(stringBuilder.toString());
 	}
 	
 	/**
@@ -164,12 +165,12 @@ public final class JsonParser {
 	 */
 	public static JsonArray parseArrayFile(File file) throws FileNotFoundException, JSONFormatException {
 		Scanner scanner = new Scanner(file);	
-		String data = "";
+		StringBuilder stringBuilder = new StringBuilder();
 		while (scanner.hasNextLine()) {
-			data += scanner.nextLine();
+			stringBuilder.append(scanner.nextLine());
 		}
 		scanner.close();
-		return parseArrayString(data);
+		return parseArrayString(stringBuilder.toString());
 	}
 	
 	/**
@@ -206,7 +207,7 @@ public final class JsonParser {
 	 * 	</p>
 	 * 	<p>
 	 * 	<pre class="tab"><code>
-	 * private static String removeWhitespace(String line)
+	 * public static String removeWhitespace(String line)
 	 * 	</pre></code>
 	 * 	</p>
 	 * 	<p>
@@ -221,17 +222,17 @@ public final class JsonParser {
 	 * 	@return the given String after removing all whitespace
 	 * 	characters not contained within a nested String
 	 */
-	private static String removeWhitespace(String line) {
+	public static String removeWhitespace(String line) {
 		Stack<Character> stack = new Stack<Character>();
-		int currentIndex = 0;
-		while (currentIndex < line.length()) {
-			char currentChar = line.charAt(currentIndex);
-			
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		char currentChar;
+		for (int i = 0; i < line.length(); i++) {
+			currentChar = line.charAt(i);
 			if (currentChar == '"') {
-				// check if character is inside a string
 				try {
 					if (stack.peek() == '"') {
-						if (line.charAt(currentIndex - 1) != '\\') {
+						if (line.charAt(i - 1) != '\\') {
 							// ending a string (quotes are not escaped)
 							stack.pop();
 						}
@@ -242,16 +243,22 @@ public final class JsonParser {
 				} catch (EmptyStackException ex) {
 					stack.push(currentChar);
 				}
-			} else if (currentChar == ' ' || currentChar == '\t' || currentChar == '\n' || currentChar == '\r'){
-				// verify whitespace is not in a string
-				if (stack.size() == 0) {
-					line = line.substring(0, currentIndex) + line.substring(currentIndex + 1, line.length());
-					continue;
+				// currentChar is never whitespace in this case
+				stringBuilder.append(currentChar);
+			} else if (stack.size() == 0) {
+				if (currentChar != ' ' 
+						&& currentChar != '\t' 
+						&& currentChar != '\n' 
+						&& currentChar != '\r' ) {
+					// non-whitespace not in a String is accepted
+					stringBuilder.append(currentChar);
 				}
+			} else {
+				// any characters including whitespace in a String is accepted
+				stringBuilder.append(currentChar);
 			}
-			currentIndex++;
 		}
-		return line;
+		return stringBuilder.toString();
 	}
 	
 	/**

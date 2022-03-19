@@ -26,6 +26,8 @@ public class JsonArray extends ArrayList<Object> {
 	 * 
 	 */
 	private static final long serialVersionUID = 7051911002593297250L;
+	
+	private final StringBuilder stringBuilder = new StringBuilder();;
 
 	public JsonArray() {
 		super();
@@ -103,20 +105,22 @@ public class JsonArray extends ArrayList<Object> {
 	
 	@Override
 	public String toString() {
-		String jsonString = "[";
+		stringBuilder.delete(0, stringBuilder.length());
+		stringBuilder.append('[');
 		int i = 0;
 		for (Object item : this) {
 			if (item instanceof String) {
-				jsonString += "\"" + item + "\"";
+				stringBuilder.append("\"" + item + "\"");
 			} else {
-				jsonString += item;
+				stringBuilder.append(item);
 			}
 			if (i < size() - 1) {
-				jsonString += ",";
+				stringBuilder.append(',');
 			}
 			i++;
 		}
-		return jsonString + "]";
+		stringBuilder.append(']');
+		return stringBuilder.toString();
 	}
 	
 	public boolean subsetOf(JsonArray other) {

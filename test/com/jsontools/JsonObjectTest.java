@@ -338,4 +338,18 @@ class JsonObjectTest {
 		}
 	}
 	
+	@Test
+	@DisplayName("toString tester")
+	void test022() {
+		try {
+			String jsonString = "{\"key1\":1,\"key2\":2,\"key3\":\"three\"}";
+			JsonObject data = JsonParser.parseObjectString(jsonString);
+			assertEquals(jsonString, data.toString());
+			assertEquals(jsonString, data.toString());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("Unexpected exception");
+		}
+	}
+	
 }

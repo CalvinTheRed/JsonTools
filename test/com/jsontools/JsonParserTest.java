@@ -244,5 +244,19 @@ class JsonParserTest {
 			fail("Unexpected exception");
 		}
 	}
+	
+	@Test
+	@DisplayName("remove whitespace")
+	void test010() {
+		try {
+			String whitespaceString = "This _   is\t_a _B  IG\t\t\t_ mess\ry\r\r\r _ \" String \"";
+			String expectedString = "This_is_a_BIG_messy_\" String \"";
+			String condensedString = JsonParser.removeWhitespace(whitespaceString);
+			assertEquals(expectedString, condensedString);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("Unexpected exception");
+		}
+	}
 
 }

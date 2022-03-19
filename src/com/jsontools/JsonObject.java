@@ -28,6 +28,8 @@ public class JsonObject extends ConcurrentHashMap<String, Object>{
 	 * 
 	 */
 	private static final long serialVersionUID = -1586787919457232015L;
+	
+	private final StringBuilder stringBuilder = new StringBuilder();;
 
 	@Override
 	public Object get(Object key) {
@@ -52,23 +54,25 @@ public class JsonObject extends ConcurrentHashMap<String, Object>{
 	
 	@Override
 	public String toString() {
-		String jsonString = "{";
+		stringBuilder.delete(0, stringBuilder.length());
+		stringBuilder.append('{');
 		int i = 0;
 		Set<String> keySet = keySet();
 		for (String key : keySet) {
-			jsonString += "\"" + key + "\":";
+			stringBuilder.append("\"" + key + "\":");
 			Object value = get(key);
 			if (value instanceof String) {
-				jsonString += "\"" + value + "\"";
+				stringBuilder.append("\"" + value + "\"");
 			} else {
-				jsonString += value;
+				stringBuilder.append(value);
 			}
 			if (i < keySet.size() - 1) {
-				jsonString += ",";
+				stringBuilder.append(',');
 			}
 			i++;
 		}
-		return jsonString + "}";
+		stringBuilder.append('}');
+		return stringBuilder.toString();
 	}
 	
 	public boolean subsetOf(JsonObject other) {
@@ -98,7 +102,7 @@ public class JsonObject extends ConcurrentHashMap<String, Object>{
 				return false;
 			}
 			if (!subset) {
-				return subset;
+				return false;
 			}
 		}
 		return subset;
